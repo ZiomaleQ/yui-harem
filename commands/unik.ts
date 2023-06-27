@@ -23,15 +23,15 @@ export const Execute = async (cmd: SlashCommandInteraction) => {
 
   if (dice == 99 || dice == 100) {
 
-    embed.addField("Kontra!", "Uniknąłeś i możesz skontrować!")
+    embed.addField("Kontra!", `[\`${dice}\`] Uniknąłeś i możesz skontrować!`)
 
     await cmd.respond({ embeds: [embed] })
   } else {
     if (dice >= 50) {
-      embed.addField("Unik!", "Wrum, ataki nietrafiły po raz kolejny!")
+      embed.addField("Unik!", `[\`${dice}\`] Wrum, ataki nietrafiły po raz kolejny!`)
       await cmd.respond({ embeds: [embed] })
     } else {
-      embed.addField("Bonk!", "Better luck next time!")
+      embed.addField("Bonk!", `[\`${dice}\`] Better luck next time!`)
       await cmd.respond({ embeds: [embed] })
     }
   }
