@@ -2,8 +2,8 @@ import { ApplicationCommandOptionType, ApplicationCommandPartial, ApplicationCom
 import { getRandom } from '../utils.ts'
 
 export const Typedef: ApplicationCommandPartial = {
-  name: "atak",
-  description: "Zaatakuj a ja zajmę się resztą!",
+  name: "dice",
+  description: "Losowanko czas!",
   type: ApplicationCommandType.CHAT_INPUT,
   options: [
     {
