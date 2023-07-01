@@ -16,19 +16,14 @@ export const Typedef: ApplicationCommandPartial = {
 }
 
 export const Execute = async (cmd: SlashCommandInteraction) => {
-
   let dice = getRandom(1, 100)
-
-
 
   const predice = dice
 
   const expr = cmd.option<string | undefined>('calc')
   if (expr !== undefined) {
-
     const env = await runParts(`let dice = ${dice};${expr}`)
-    dice = env.dice < 0 ? 0 : (env.dice > 100 ? 100 : env.dice)
-
+    dice = (env.dice < 0 ? 0 : (env.dice > 100 ? 100 : env.dice)).toFixed(2)
   }
 
   const embed = new Embed().setColor(dice >= 60 ? 0x00ff00 : 0xff0000).setTitle("Let's go!")

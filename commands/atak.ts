@@ -33,11 +33,9 @@ export const Execute = async (cmd: SlashCommandInteraction) => {
 
   const expr = cmd.option<string | undefined>('calc')
   if (expr !== undefined) {
-
     const env = await runParts(`let dmg = ${dmg}; let dice = ${dice};${expr}`)
-    dmg = env.dmg < 0 ? 0 : env.dmg
-    dice = env.dice < 0 ? 0 : (env.dice > 100 ? 100 : env.dice)
-
+    dmg = env.dmg < 0 ? 0 : env.dmg.toFixed(2)
+    dice = (env.dice < 0 ? 0 : (env.dice > 100 ? 100 : env.dice)).toFixed(2)
   }
 
   if (dice >= 99) dmg *= 1.5
