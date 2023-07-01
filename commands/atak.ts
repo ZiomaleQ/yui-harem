@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandPartial, ApplicationCommandType, Embed, SlashCommandInteraction } from "../deps.ts"
-import { getRandom } from '../utils.ts'
+import { getRandom, runParts } from '../utils.ts'
 
 export const Typedef: ApplicationCommandPartial = {
   name: "atak",
@@ -25,11 +25,31 @@ export const Execute = async (cmd: SlashCommandInteraction) => {
   let lvl = Math.abs(cmd.option<number>('lvl'))
   lvl = lvl == 0 ? 0 : lvl - 1
 
-  const dice = getRandom(1, 100)
+  let dice = getRandom(1, 100)
   let dmg = Math.round(getRandom(1, 40 + lvl * 10))
+
+  const predice = dice
+  const predmg = dmg
+
+  const expr = cmd.option<string | undefined>('calc')
+  if (expr !== undefined) {
+
+    const env = await runParts(`let dmg = ${dmg}; let dice = ${dice};${expr}`)
+    dmg = env.dmg < 0 ? 0 : env.dmg
+    dice = env.dice < 0 ? 0 : (env.dice > 100 ? 100 : env.dice)
+
+  }
+
   if (dice >= 99) dmg *= 1.5
 
   const embed = new Embed().setColor(dice >= 50 ? 0x00ff00 : 0xff0000).setTitle("Let's go!")
+
+  if (expr !== undefined) {
+    embed
+      .addField("Przed obliczeniami:", "rzut: " + predice + "\ndmg: " + predmg, true)
+      .addField("Po obliczeniach:", "rzut: " + dice + "\ndmg: " + dmg, true)
+      .addField("Obliczenia", `\`${expr}\``, true)
+  }
 
   if (dice == 99 || dice == 100) {
 

@@ -10,7 +10,7 @@ client.on("ready", async () => {
     .filter(file => file.isFile && file.name.endsWith('.ts') || file.name.endsWith('.js'))
     .map(async (file) => {
       return await import(`./commands/${file.name}`)
-    // deno-lint-ignore no-explicit-any
+      // deno-lint-ignore no-explicit-any
     })) as { Typedef: ApplicationCommandPartial, Execute: (cmd: ApplicationCommandInteraction) => any }[]
 
   if (commands.size != localCommands.length) {

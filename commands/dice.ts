@@ -16,7 +16,7 @@ export const Typedef: ApplicationCommandPartial = {
       name: "max",
       description: "Maksimum",
       type: ApplicationCommandOptionType.NUMBER,
-      required: false,
+      required: true,
     },
   ]
 }
