@@ -7,9 +7,12 @@ export const getRandom = (min = 0, max: number) => {
 
 // deno-lint-ignore no-explicit-any
 export async function runParts(code: string): Promise<Record<string, any>> {
+
+  const path = Deno.build.os === "windows" ? ".\\bin\\parts-1.0-SNAPSHOT.jar" : "./bin/parts-1.0-SNAPSHOT.jar"
+
   // deno-lint-ignore no-deprecated-deno-api
   const p = Deno.run({
-    cmd: ["java", "-jar", ".\\bin\\parts-1.0-SNAPSHOT.jar", "--embed", code],
+    cmd: ["java", "-jar", path, "--embed", code],
     stdout: "piped",
     stderr: "piped",
   })
